@@ -9,10 +9,10 @@ import { LoopingImages } from './components/LoopingImages';
 const TiltCard = ({ children, className }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -214,10 +214,10 @@ const App = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
-            className="max-w-6xl text-6xl md:text-9xl font-heading font-bold mb-8 tracking-tighter text-glow-blue leading-[0.8] uppercase"
+            className="max-w-6xl text-6xl md:text-[9rem] font-heading font-bold mb-8 tracking-tighter text-glow-blue leading-[0.8] uppercase"
           >
             VERTEX <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-[length:200%_auto] animate-gradient-flow">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-[length:200%_auto] animate-gradient-flow">
               DIGITAL.
             </span>
           </motion.h1>
@@ -226,7 +226,7 @@ const App = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="max-w-3xl text-gray-400 text-lg md:text-2xl mb-14 leading-relaxed font-light tracking-widest uppercase opacity-70"
+            className="max-w-3xl text-gray-300 text-lg md:text-2xl mb-14 leading-relaxed font-light tracking-widest uppercase opacity-80"
           >
             Future-ready systems designed for global scale.
           </motion.p>
@@ -237,20 +237,30 @@ const App = () => {
             transition={{ delay: 0.7, duration: 1 }}
             className="flex flex-col sm:flex-row gap-8"
           >
-            <a href="#services" className="px-16 py-6 rounded-full bg-blue-600 text-white font-black text-xs uppercase tracking-[0.5em] hover:bg-cyan-400 transition-all shadow-2xl shadow-blue-500/40 flex items-center gap-4 group">
+            <motion.a
+              href="#services"
+              whileHover={{ scale: 1.05, filter: "brightness(1.2)" }}
+              whileTap={{ scale: 0.95 }}
+              className="px-16 py-6 rounded-full bg-blue-600 text-white font-black text-xs uppercase tracking-[0.5em] hover:bg-cyan-400 transition-all shadow-2xl shadow-blue-500/40 flex items-center gap-4 group"
+            >
               Explore <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />
-            </a>
-            <a href="#contact" className="px-16 py-6 rounded-full border border-white/20 text-white font-black text-xs uppercase tracking-[0.5em] hover:bg-white/10 transition-all">
+            </motion.a>
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-16 py-6 rounded-full border border-white/20 text-white font-black text-xs uppercase tracking-[0.5em] hover:bg-white/10 transition-all"
+            >
               Initialize
-            </a>
+            </motion.a>
           </motion.div>
         </section>
 
         {/* Services Section */}
         <section id="services" className="max-w-7xl mx-auto px-6 py-40 border-t border-white/5 relative">
           <div className="text-center mb-32">
-            <h2 className="text-[10px] font-black text-cyan-400 uppercase tracking-[1em] mb-6">Network Architecture</h2>
-            <h3 className="text-6xl md:text-8xl font-heading font-bold tracking-tighter uppercase leading-none">Solutions</h3>
+            <h2 className="text-xs font-black text-cyan-400 uppercase tracking-[1em] mb-6 shadow-cyan-500/50 drop-shadow-lg">Network Architecture</h2>
+            <h3 className="text-6xl md:text-8xl font-heading font-bold tracking-tighter uppercase leading-none text-white drop-shadow-2xl">Solutions</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -276,48 +286,51 @@ const App = () => {
         </section>
 
         {/* About Section */}
-        <section id="about" className="max-w-7xl mx-auto px-6 py-40 grid lg:grid-cols-2 gap-32 items-center relative">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            className="relative order-2 lg:order-1 perspective-1000"
-          >
-            <div className="absolute inset-0 bg-blue-600/10 blur-[150px] rounded-full" />
-            <motion.div style={{ transformStyle: "preserve-3d" }}>
-              <LoopingImages />
-            </motion.div>
-          </motion.div>
+        <section id="about" className="max-w-7xl mx-auto px-6 py-40 grid md:grid-cols-2 gap-16 items-center relative z-20">
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="order-1 lg:order-2"
+            className="text-left"
           >
-            <h2 className="text-[10px] font-black text-cyan-400 uppercase tracking-[1em] mb-8">Node Identity</h2>
-            <h3 className="text-5xl md:text-7xl font-heading font-bold mb-10 tracking-tighter leading-none uppercase">The Apex of Digital Engineering.</h3>
-            <p className="text-gray-400 text-2xl mb-12 leading-relaxed font-light tracking-wide">
+            <h2 className="text-sm md:text-base font-black text-cyan-400 uppercase tracking-[1em] mb-12">Node Identity</h2>
+            <h3 className="text-5xl md:text-7xl font-heading font-bold mb-12 tracking-tighter leading-none uppercase text-white">
+              The Apex of <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Digital Engineering.</span>
+            </h3>
+            <p className="text-gray-400 text-xl md:text-2xl mb-16 leading-relaxed font-light tracking-wide max-w-xl">
               Vertex Digital is a high-frequency agency. We deliver architectures that aren't just modern—they're evolutionary.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="flex flex-wrap gap-4 mb-12 md:mb-0">
               {["Neural Workflows", "UX/UI Evolution", "Scale Automation", "Logic Architecture"].map((item, i) => (
-                <div key={i} className="flex items-center gap-5 p-6 glass rounded-3xl border border-white/5 hover:bg-white/10 transition-colors group">
-                  <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_15px_#22D3EE] group-hover:scale-150 transition-transform" />
-                  <span className="text-xs font-black uppercase tracking-[0.2em]">{item}</span>
+                <div key={i} className="flex items-center gap-3 px-6 py-3 glass rounded-full border border-white/10 hover:bg-white/10 transition-colors group cursor-default">
+                  <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_15px_#22D3EE] group-hover:scale-150 transition-transform" />
+                  <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em]">{item}</span>
                 </div>
               ))}
             </div>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: 50 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative w-full flex justify-center md:justify-end perspective-1000"
+          >
+            <div className="absolute inset-0 bg-blue-600/20 blur-[150px] rounded-full translate-x-1/4" />
+            <LoopingImages />
+          </motion.div>
+
         </section>
 
         {/* Portfolio Section */}
         <section id="portfolio" className="max-w-7xl mx-auto px-6 py-40 border-t border-white/5">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-32 gap-12">
+          <div className="flex flex-col items-center justify-center mb-32 gap-8 text-center">
             <div>
-              <h2 className="text-[10px] font-black text-cyan-400 uppercase tracking-[1em] mb-6">Archive</h2>
-              <h3 className="text-6xl md:text-8xl font-heading font-bold tracking-tighter uppercase leading-none">Telemetry</h3>
+              <h2 className="text-xs font-black text-cyan-400 uppercase tracking-[1em] mb-6 shadow-cyan-500/50 drop-shadow-lg">Archive</h2>
+              <h3 className="text-6xl md:text-8xl font-heading font-bold tracking-tighter uppercase leading-none text-white drop-shadow-2xl">Telemetry</h3>
             </div>
             <a href="#" className="px-14 py-5 rounded-full glass border border-white/10 hover:border-cyan-400 transition-all font-black text-[10px] uppercase tracking-[0.4em]">
               Protocol: Full Archive
