@@ -6,7 +6,8 @@ export default function ProjectCard({
     description,
     image,
     services,
-    link
+    link,
+    onClick
 }) {
     return (
         <div className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-blue-500/50 transition-all duration-300">
@@ -48,14 +49,26 @@ export default function ProjectCard({
                 )}
 
                 {/* Action */}
-                <a
-                    href={"https://twamof.github.io/adampeinture74/"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition"
-                >
-                    View Project →
-                </a>
+                {onClick ? (
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onClick();
+                        }}
+                        className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition cursor-pointer"
+                    >
+                        View Project →
+                    </button>
+                ) : (
+                    <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition"
+                    >
+                        View Project →
+                    </a>
+                )}
             </div>
         </div>
     );

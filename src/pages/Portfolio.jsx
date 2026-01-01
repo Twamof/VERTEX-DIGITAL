@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import ProjectCard from "../components/ProjectCard";
 import { Logo } from "../components/Logo";
 
@@ -19,6 +21,8 @@ const PortfolioSection = ({ title, children }) => (
 );
 
 export default function Portfolio() {
+    const [selectedImage, setSelectedImage] = useState(null);
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-[#050b1e] to-black text-white pt-10 px-6">
 
@@ -89,24 +93,51 @@ export default function Portfolio() {
                         ]}
                         link="https://twamof.github.io/adampeinture74/"
                     />
+
+                    <ProjectCard
+                        title="Pure Harmony"
+                        category="Beauty & Wellness"
+                        description="A sanctuary where modern artistry meets timeless luxury. A premium booking and services showcase for a high-end beauty salon."
+                        image="/projects/pure-harmony.png"
+                        services={[
+                            "UI/UX Design",
+                            "Booking Integration",
+                            "Brand Philosophy",
+                            "Responsive Layout"
+                        ]}
+                        link="https://twamof.github.io/beauty_salon/"
+                    />
                 </PortfolioSection>
 
                 {/* DESIGNS */}
                 <PortfolioSection title="Designs (Canva / Products)">
-                    <ProjectCard
-                        title="Brand Identity Pack"
-                        category="Graphic Design"
-                        description="Complete brand overhaul featuring modern typography, color palettes, and social media assets created in Canva."
-                        image="https://images.unsplash.com/photo-1626785774573-4b79931bfd93?q=80&w=2070&auto=format&fit=crop"
-                        services={[
-                            "Logo Design",
-                            "Social Media Kit",
-                            "Product Packaging",
-                            "Canva Templates"
-                        ]}
-                        link="#"
-                    />
-                    {/* Add more Design cards here */}
+                    {[
+                        { title: "Restaurant Menu Design", image: "/projects/designs/Black Illustrative Restaurant Menu.jpg", category: "Print Design", description: "Elegant and modern restaurant menu layout designed for high-end dining experiences." },
+                        { title: "Beauty Social Post", image: "/projects/designs/Elegant Blush Pink Beauty Post.png", category: "Social Media", description: "Aesthetic social media template tailored for beauty and wellness brands." },
+                        { title: "Professional Book Cover", image: "/projects/designs/book (1).png", category: "Print Design", description: "Captivating book cover design focused on typography and visual impact." },
+                        { title: "Modern Menu Concept", image: "/projects/designs/restaurant menu.jpg", category: "Print Design", description: "Clean and functional menu design optimized for readability and brand alignment." },
+                        { title: "Creative Composition 1", image: "/projects/designs/1.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 2", image: "/projects/designs/2.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 3", image: "/projects/designs/3.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 4", image: "/projects/designs/4.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 6", image: "/projects/designs/6.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 8", image: "/projects/designs/8.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 11", image: "/projects/designs/11.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 12", image: "/projects/designs/12.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 13", image: "/projects/designs/13.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                        { title: "Creative Composition 14", image: "/projects/designs/14.png", category: "Branding", description: "Strategic visual composition for brand identity systems." },
+                    ].map((project, i) => (
+                        <ProjectCard
+                            key={i}
+                            title={project.title}
+                            category={project.category}
+                            description={project.description}
+                            image={project.image}
+                            services={["Graphic Design", "Brand Identity", "Visual Communication"]}
+                            link="#"
+                            onClick={() => setSelectedImage(project.image)}
+                        />
+                    ))}
                 </PortfolioSection>
 
                 {/* VIDEOS */}
@@ -144,6 +175,35 @@ export default function Portfolio() {
                 </PortfolioSection>
 
             </div>
+
+            {/* Image Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImage(null)}
+                        className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+                    >
+                        <button
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+                        >
+                            <X size={40} />
+                        </button>
+                        <motion.img
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            src={selectedImage}
+                            alt="Preview"
+                            className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl border border-white/10"
+                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
