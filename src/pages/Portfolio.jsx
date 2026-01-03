@@ -107,6 +107,34 @@ export default function Portfolio() {
                         ]}
                         link="https://twamof.github.io/beauty_salon/"
                     />
+
+                    <ProjectCard
+                        title="Glim"
+                        category="Beauty & Aesthetics"
+                        description="Natural hairstyling & makeup that reflects your essence. A curated beauty experience for every milestone."
+                        image="/projects/glim.jpg"
+                        services={[
+                            "UI/UX Design",
+                            "Visual Storytelling",
+                            "Responsive Web Design",
+                            "Brand Experience"
+                        ]}
+                        link="https://twamof.github.io/GL/"
+                    />
+
+                    <ProjectCard
+                        title="Healing Bird"
+                        category="E-Commerce / Wellness"
+                        description="Ultra Magique BMG Oil. A premium botanical skincare store designed for a luxury healing ritual."
+                        image="/projects/healing-bird.png"
+                        services={[
+                            "E-Commerce Design",
+                            "Product Showcase",
+                            "Minimalist UI",
+                            "Conversion Optimization"
+                        ]}
+                        link="https://twamof.github.io/Oil/"
+                    />
                 </PortfolioSection>
 
                 {/* DESIGNS */}
